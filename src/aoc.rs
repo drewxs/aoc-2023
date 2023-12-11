@@ -1,3 +1,6 @@
+use std::error::Error;
+use std::fs;
+
 use reqwest::blocking::Client;
 
 const BASE_URL: &str = "https://adventofcode.com";
@@ -18,24 +21,23 @@ impl AOC {
         }
     }
 
-    pub fn get_input(&self, day: u8) -> String {
-        let cache = std::fs::read_to_string(format!("cache/{}.txt", day));
+    pub fn get_input(&self, day: u8) -> Result<String, Box<dyn Error>> {
+        let cache = fs::read_to_string(format!("cache/{}.txt", day));
         if let Ok(data) = cache {
-            return data;
+            return Ok(data);
         }
 
         let res = self
             .client
             .get(&format!("{}/{}/day/{}/input", BASE_URL, self.year, day))
             .header("Cookie", format!("session={}", self.token))
-            .send()
-            .unwrap();
+            .send()?;
 
-        let data = res.text().unwrap();
+        let data = res.text()?;
 
-        std::fs::create_dir("cache").unwrap();
-        std::fs::write(format!("cache/{}.txt", day), &data).unwrap();
+        fs::create_dir("cache")?;
+        fs::write(format!("cache/{}.txt", day), &data)?;
 
-        data
+        Ok(data)
     }
 }
