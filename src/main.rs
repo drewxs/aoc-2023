@@ -7,12 +7,13 @@ use std::env;
 fn main() {
     dotenv::dotenv().ok();
 
-    let token = env::var("AOC_TOKEN").unwrap();
+    let token = env::var("AOC_TOKEN").expect("AOC_TOKEN not set");
     let aoc = AOC::new(2023, token);
 
-    solution(1, 1, Box::new(days::day1::part1(&aoc)));
+    print_solution(1, 1, days::day_01::part_1(&aoc));
+    print_solution(1, 2, days::day_01::part_2(&aoc));
 }
 
-fn solution(day: u8, part: u8, x: Box<dyn std::fmt::Display>) {
-    println!("day_{}::part_{} -> {}", day, part, x);
+fn print_solution(day: u8, part: u8, x: usize) {
+    println!("day_{:02}::part_{:02} -> {}", day, part, x);
 }
