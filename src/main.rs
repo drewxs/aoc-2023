@@ -12,6 +12,7 @@ fn main() {
 
     print_solution(1, 1, days::day_01::part_1(&aoc));
     print_solution(1, 2, days::day_01::part_2(&aoc));
+    print_solution(2, 1, days::day_02::part_1(&aoc));
 }
 
 fn print_solution(day: u8, part: u8, x: usize) {
