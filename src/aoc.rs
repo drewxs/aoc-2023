@@ -22,7 +22,7 @@ impl AOC {
     }
 
     pub fn get_input(&self, day: u8) -> Result<String, Box<dyn Error>> {
-        let cache = fs::read_to_string(format!("cache/day_{:02}.txt", day));
+        let cache = fs::read_to_string(format!("cache/day_{:02}", day));
         if let Ok(data) = cache {
             return Ok(data);
         }
@@ -36,7 +36,7 @@ impl AOC {
         let data = res.text()?;
 
         fs::create_dir_all("cache")?;
-        fs::write(format!("cache/day_{:02}.txt", day), &data)?;
+        fs::write(format!("cache/day_{:02}", day), &data)?;
 
         Ok(data)
     }

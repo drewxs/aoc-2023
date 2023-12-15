@@ -1,16 +1,11 @@
-use crate::aoc::AOC;
-
 const MAX_RED_CUBES: u8 = 12;
 const MAX_GREEN_CUBES: u8 = 13;
 const MAX_BLUE_CUBES: u8 = 14;
 
-pub fn part_1(aoc: &AOC) -> usize {
-    let input = aoc.get_input(2).unwrap();
-
-    let mut game = 0;
-
+pub fn part_1(input: &str) -> usize {
+    let mut game_id = 0;
     input.lines().fold(0, |acc, line| {
-        game += 1;
+        game_id += 1;
 
         let subsets: Vec<&str> = line
             .split(":")
@@ -36,13 +31,11 @@ pub fn part_1(aoc: &AOC) -> usize {
             }
         }
 
-        acc + game
+        acc + game_id
     })
 }
 
-pub fn part_2(aoc: &AOC) -> usize {
-    let input = aoc.get_input(2).unwrap();
-
+pub fn part_2(input: &str) -> usize {
     input.lines().fold(0, |acc, line| {
         let subsets: Vec<&str> = line
             .split(":")

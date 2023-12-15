@@ -3,6 +3,7 @@ use crate::aoc::AOC;
 pub struct Solution {
     day: u8,
     part: u8,
+    count: u8,
     aoc: AOC,
 }
 
@@ -11,14 +12,23 @@ impl Solution {
         Self {
             day: 1,
             part: 1,
+            count: 0,
             aoc,
         }
     }
 
-    pub fn print(&mut self, solution: fn(&AOC) -> usize) {
-        let result = solution(&self.aoc);
-        println!("day_{:02}::part_{:02} -> {}", self.day, self.part, result);
-        self.day += 1;
-        self.part = if self.part == 1 { 2 } else { 1 };
+    pub fn print(&mut self, solution: fn(&str) -> usize) {
+        let input = self.aoc.get_input(self.day).unwrap();
+        let result = solution(&input);
+
+        println!("day_{:02}::part_{} -> {}", self.day, self.part, result);
+
+        self.count += 1;
+        if self.count % 2 == 0 {
+            self.day += 1;
+            self.part = 1;
+        } else {
+            self.part = 2;
+        }
     }
 }
