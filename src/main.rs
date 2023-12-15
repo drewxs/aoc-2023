@@ -1,20 +1,21 @@
 mod aoc;
 mod days;
+mod solution;
+
+use std::env;
 
 use aoc::AOC;
-use std::env;
+use days::*;
+use solution::Solution;
 
 fn main() {
     dotenv::dotenv().ok();
 
     let token = env::var("AOC_TOKEN").expect("AOC_TOKEN not set");
     let aoc = AOC::new(2023, token);
+    let mut solution = Solution::new(aoc);
 
-    print_solution(1, 1, days::day_01::part_1(&aoc));
-    print_solution(1, 2, days::day_01::part_2(&aoc));
-    print_solution(2, 1, days::day_02::part_1(&aoc));
-}
-
-fn print_solution(day: u8, part: u8, x: usize) {
-    println!("day_{:02}::part_{:02} -> {}", day, part, x);
+    solution.print(day_01::part_1);
+    solution.print(day_01::part_2);
+    solution.print(day_02::part_1);
 }
