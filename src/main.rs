@@ -18,4 +18,5 @@ fn main() {
     solution.print(day_01::part_1);
     solution.print(day_01::part_2);
     solution.print(day_02::part_1);
+    solution.print(day_02::part_2);
 }
