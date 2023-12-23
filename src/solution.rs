@@ -17,7 +17,7 @@ impl Solution {
         }
     }
 
-    pub fn print(&mut self, solution: fn(&str) -> usize) {
+    pub fn print<T: std::fmt::Display>(&mut self, solution: fn(&str) -> T) {
         let input = self.aoc.get_input(self.day).unwrap();
         let result = solution(&input);
 
