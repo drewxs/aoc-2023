@@ -21,4 +21,5 @@ fn main() {
     solution.print(day_02::part_2);
     solution.print(day_03::part_1);
     solution.print(day_03::part_2);
+    solution.print(day_04::part_1);
 }
