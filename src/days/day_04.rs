@@ -1,4 +1,6 @@
-pub fn part_1(input: &str) -> u16 {
+use std::collections::HashMap;
+
+pub fn part_1(input: &str) -> u32 {
     input
         .lines()
         .map(|card| {
@@ -7,7 +9,7 @@ pub fn part_1(input: &str) -> u16 {
                 .map(|part| {
                     part.split_whitespace()
                         .map(|x| x.trim().parse::<u8>().unwrap())
-                        .collect::<Vec<u8>>()
+                        .collect()
                 })
                 .collect::<Vec<Vec<u8>>>()
         })
@@ -19,4 +21,35 @@ pub fn part_1(input: &str) -> u16 {
                 acc
             })
         })
+}
+
+pub fn part_2(input: &str) -> u32 {
+    let mut copies: HashMap<usize, u32> = HashMap::new();
+
+    for (i, line) in input.lines().enumerate() {
+        let card: Vec<Vec<u8>> = line.split(":").collect::<Vec<&str>>()[1]
+            .split("|")
+            .map(|part| {
+                part.split_whitespace()
+                    .map(|x| x.trim().parse::<u8>().unwrap())
+                    .collect()
+            })
+            .collect();
+
+        let mut num_winning = 0;
+        for winning_num in card[0].iter() {
+            if card[1].contains(winning_num) {
+                num_winning += 1;
+            }
+        }
+
+        *copies.entry(i).or_insert(0) += 1;
+        let num_copies = *copies.get(&i).unwrap();
+
+        for j in 1..=num_winning {
+            *copies.entry(i + j).or_insert(0) += num_copies;
+        }
+    }
+
+    copies.values().sum()
 }
