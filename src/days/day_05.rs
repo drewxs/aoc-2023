@@ -10,6 +10,27 @@ pub fn part_1(input: &str) -> i64 {
         .map(|x| x.parse().unwrap())
         .collect();
 
+    closest_location(input, &seeds)
+}
+
+pub fn part_2(input: &str) -> i64 {
+    let seeds: Vec<i64> = input
+        .lines()
+        .next()
+        .unwrap()
+        .split_whitespace()
+        .skip(1)
+        .map(|x| x.parse().unwrap())
+        .collect::<Vec<i64>>()
+        .chunks(2)
+        .map(|x| (x[0], x[1]))
+        .flat_map(|(seed, range)| (0..range).map(move |x| seed + x))
+        .collect();
+
+    closest_location(input, &seeds)
+}
+
+fn closest_location(input: &str, seeds: &Vec<i64>) -> i64 {
     let lists: Vec<Vec<(Range<i64>, i64)>> = input
         .split("\n\n")
         .skip(1)
