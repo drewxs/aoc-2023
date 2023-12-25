@@ -1,9 +1,7 @@
 use std::ops::Range;
 
-type LookupTable = Vec<(Range<i64>, i64)>; // (range, offset)
-
 pub fn part_1(input: &str) -> i64 {
-    let mut seeds: Vec<i64> = input
+    let seeds: Vec<i64> = input
         .lines()
         .next()
         .unwrap()
@@ -12,7 +10,7 @@ pub fn part_1(input: &str) -> i64 {
         .map(|x| x.parse().unwrap())
         .collect();
 
-    let lists: Vec<LookupTable> = input
+    let lists: Vec<Vec<(Range<i64>, i64)>> = input
         .split("\n\n")
         .skip(1)
         .map(|map| {
@@ -24,20 +22,21 @@ pub fn part_1(input: &str) -> i64 {
                         .map(|x| x.parse().unwrap())
                         .collect();
 
-                    (parts[1]..parts[1] + parts[2], parts[0] - parts[1])
+                    (parts[1]..parts[1] + parts[2], parts[0] - parts[1]) // (range, offset)
                 })
                 .collect()
         })
         .collect();
 
-    for list in lists.iter() {
-        for seed in seeds.iter_mut() {
-            *seed = list
-                .iter()
-                .find_map(|(range, offset)| range.contains(seed).then_some(*seed + *offset))
-                .unwrap_or(*seed)
-        }
-    }
-
-    *seeds.iter().min().unwrap()
+    seeds
+        .iter()
+        .map(|seed| {
+            lists.iter().fold(*seed, |acc, list| {
+                list.iter()
+                    .find_map(|(range, offset)| range.contains(&acc).then_some(acc + offset))
+                    .unwrap_or(acc)
+            })
+        })
+        .min()
+        .unwrap()
 }
