@@ -17,6 +17,10 @@ fn main() {
     let args: Vec<u8> = env::args().skip(1).map(|x| x.parse().unwrap()).collect();
     match args.len() {
         0 => solution.print_all(),
+        1 => {
+            solution.print(args[0], 1);
+            solution.print(args[0], 2);
+        }
         2 => solution.print(args[0], args[1]),
         _ => println!("Invalid number of arguments"),
     }
