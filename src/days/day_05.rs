@@ -1,33 +1,27 @@
 use std::ops::Range;
 
 pub fn part_1(input: &str) -> i64 {
-    let seeds: Vec<i64> = input
-        .lines()
-        .next()
-        .unwrap()
-        .split_whitespace()
-        .skip(1)
-        .map(|x| x.parse().unwrap())
-        .collect();
+    let seeds = get_nums(input.lines().next());
 
     closest_location(input, &seeds)
 }
 
 pub fn part_2(input: &str) -> i64 {
-    let seeds: Vec<i64> = input
-        .lines()
-        .next()
-        .unwrap()
-        .split_whitespace()
-        .skip(1)
-        .map(|x| x.parse().unwrap())
-        .collect::<Vec<i64>>()
+    let seeds = get_nums(input.lines().next())
         .chunks(2)
         .map(|x| (x[0], x[1]))
         .flat_map(|(seed, range)| (0..range).map(move |x| seed + x))
         .collect();
 
     closest_location(input, &seeds)
+}
+
+fn get_nums(s: Option<&str>) -> Vec<i64> {
+    s.unwrap()
+        .split_whitespace()
+        .skip(1)
+        .map(|x| x.parse().unwrap())
+        .collect()
 }
 
 fn closest_location(input: &str, seeds: &Vec<i64>) -> i64 {
