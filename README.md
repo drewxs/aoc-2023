@@ -16,10 +16,9 @@ Create `.env` with `AOC_TOKEN=your_session_cookie`.
 
 ## Usage
 
-Print solutions:
-
 ```sh
-cargo run
+cargo run # all
+cargo run <day> <part>
 ```
 
 Clear cache:

@@ -5,7 +5,6 @@ mod solution;
 use std::env;
 
 use aoc::AOC;
-use days::*;
 use solution::Solution;
 
 fn main() {
@@ -13,16 +12,12 @@ fn main() {
 
     let token = env::var("AOC_TOKEN").expect("AOC_TOKEN not set");
     let aoc = AOC::new(2023, token);
-    let mut solution = Solution::new(aoc);
+    let solution = Solution::new(aoc);
 
-    solution.print(day_01::part_1);
-    solution.print(day_01::part_2);
-    solution.print(day_02::part_1);
-    solution.print(day_02::part_2);
-    solution.print(day_03::part_1);
-    solution.print(day_03::part_2);
-    solution.print(day_04::part_1);
-    solution.print(day_04::part_2);
-    solution.print(day_05::part_1);
-    solution.print(day_05::part_2);
+    let args: Vec<u8> = env::args().skip(1).map(|x| x.parse().unwrap()).collect();
+    match args.len() {
+        0 => solution.print_all(),
+        2 => solution.print(args[0], args[1]),
+        _ => println!("Invalid number of arguments"),
+    }
 }
