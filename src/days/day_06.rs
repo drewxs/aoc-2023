@@ -4,22 +4,16 @@ pub fn part_1(input: &str) -> usize {
     let times = get_nums(lines.next());
     let distances = get_nums(lines.next());
 
-    let mut total: Vec<usize> = Vec::new();
-
-    for (i, &time) in times.iter().enumerate() {
-        let target_distance = distances[i];
-
-        let mut num_ways = 0;
-        for j in 0..=time {
-            if (time - j) * j > target_distance {
-                num_ways += 1;
+    times.iter().enumerate().fold(1, |acc, (i, &time)| {
+        let num_ways = (0..=time).fold(0, |acc, j| {
+            if (time - j) * j > distances[i] {
+                return acc + 1;
             }
-        }
+            acc
+        });
 
-        total.push(num_ways);
-    }
-
-    total.iter().fold(1, |acc, x| acc * x)
+        acc * num_ways
+    })
 }
 
 fn get_nums(s: Option<&str>) -> Vec<usize> {
