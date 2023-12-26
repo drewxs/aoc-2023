@@ -47,6 +47,7 @@ impl Solution {
             },
             6 => match part {
                 1 => self.print_solution(day, part, day_06::part_1),
+                2 => self.print_solution(day, part, day_06::part_2),
                 _ => println!("Invalid part"),
             },
             _ => println!("Invalid day"),
