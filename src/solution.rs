@@ -11,10 +11,9 @@ impl Solution {
     }
 
     pub fn print_all(&self) {
-        let mut part = 1;
-        for i in 1..=31 {
-            self.print(i, part);
-            part = if part == 1 { 2 } else { 1 };
+        for i in 1..=25 {
+            self.print(i, 1);
+            self.print(i, 2);
         }
     }
 
@@ -48,6 +47,101 @@ impl Solution {
             6 => match part {
                 1 => self.print_solution(day, part, day_06::part_1),
                 2 => self.print_solution(day, part, day_06::part_2),
+                _ => println!("Invalid part"),
+            },
+            7 => match part {
+                1 => self.print_solution(day, part, day_07::part_1),
+                2 => self.print_solution(day, part, day_07::part_2),
+                _ => println!("Invalid part"),
+            },
+            8 => match part {
+                1 => self.print_solution(day, part, day_08::part_1),
+                2 => self.print_solution(day, part, day_08::part_2),
+                _ => println!("Invalid part"),
+            },
+            9 => match part {
+                1 => self.print_solution(day, part, day_09::part_1),
+                2 => self.print_solution(day, part, day_09::part_2),
+                _ => println!("Invalid part"),
+            },
+            10 => match part {
+                1 => self.print_solution(day, part, day_10::part_1),
+                2 => self.print_solution(day, part, day_10::part_2),
+                _ => println!("Invalid part"),
+            },
+            11 => match part {
+                1 => self.print_solution(day, part, day_11::part_1),
+                2 => self.print_solution(day, part, day_11::part_2),
+                _ => println!("Invalid part"),
+            },
+            12 => match part {
+                1 => self.print_solution(day, part, day_12::part_1),
+                2 => self.print_solution(day, part, day_12::part_2),
+                _ => println!("Invalid part"),
+            },
+            13 => match part {
+                1 => self.print_solution(day, part, day_13::part_1),
+                2 => self.print_solution(day, part, day_13::part_2),
+                _ => println!("Invalid part"),
+            },
+            14 => match part {
+                1 => self.print_solution(day, part, day_14::part_1),
+                2 => self.print_solution(day, part, day_14::part_2),
+                _ => println!("Invalid part"),
+            },
+            15 => match part {
+                1 => self.print_solution(day, part, day_15::part_1),
+                2 => self.print_solution(day, part, day_15::part_2),
+                _ => println!("Invalid part"),
+            },
+            16 => match part {
+                1 => self.print_solution(day, part, day_16::part_1),
+                2 => self.print_solution(day, part, day_16::part_2),
+                _ => println!("Invalid part"),
+            },
+            17 => match part {
+                1 => self.print_solution(day, part, day_17::part_1),
+                2 => self.print_solution(day, part, day_17::part_2),
+                _ => println!("Invalid part"),
+            },
+            18 => match part {
+                1 => self.print_solution(day, part, day_18::part_1),
+                2 => self.print_solution(day, part, day_18::part_2),
+                _ => println!("Invalid part"),
+            },
+            19 => match part {
+                1 => self.print_solution(day, part, day_19::part_1),
+                2 => self.print_solution(day, part, day_19::part_2),
+                _ => println!("Invalid part"),
+            },
+            20 => match part {
+                1 => self.print_solution(day, part, day_20::part_1),
+                2 => self.print_solution(day, part, day_20::part_2),
+                _ => println!("Invalid part"),
+            },
+            21 => match part {
+                1 => self.print_solution(day, part, day_21::part_1),
+                2 => self.print_solution(day, part, day_21::part_2),
+                _ => println!("Invalid part"),
+            },
+            22 => match part {
+                1 => self.print_solution(day, part, day_22::part_1),
+                2 => self.print_solution(day, part, day_22::part_2),
+                _ => println!("Invalid part"),
+            },
+            23 => match part {
+                1 => self.print_solution(day, part, day_23::part_1),
+                2 => self.print_solution(day, part, day_23::part_2),
+                _ => println!("Invalid part"),
+            },
+            24 => match part {
+                1 => self.print_solution(day, part, day_24::part_1),
+                2 => self.print_solution(day, part, day_24::part_2),
+                _ => println!("Invalid part"),
+            },
+            25 => match part {
+                1 => self.print_solution(day, part, day_25::part_1),
+                2 => self.print_solution(day, part, day_25::part_2),
                 _ => println!("Invalid part"),
             },
             _ => println!("Invalid day"),
