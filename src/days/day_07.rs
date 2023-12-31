@@ -6,8 +6,6 @@ const CARDS: [char; 13] = [
 ];
 
 pub fn part_1(input: &str) -> usize {
-    let n = input.lines().clone().count();
-
     let hands: Vec<(&str, usize)> = input
         .lines()
         .map(|line| {
@@ -20,23 +18,25 @@ pub fn part_1(input: &str) -> usize {
 
     let mut scores: BTreeMap<u8, Vec<usize>> = BTreeMap::new();
 
-    for i in 0..n {
-        let (hand, _) = hands[i];
-        let cards: Vec<char> = hand.chars().collect();
+    for (i, (hand, _)) in hands.iter().enumerate() {
+        let mut cards: Vec<char> = hand.chars().collect();
+        cards.sort_unstable();
 
+        let pairs = get_pairs(&cards);
+        let num_pairs = num_pairs(&pairs, 2);
         let mut score = 1;
 
         if n_of_a_kind(&cards, 5) {
             score = 7;
         } else if n_of_a_kind(&cards, 4) {
             score = 6;
-        } else if full_house(&cards) {
+        } else if full_house(&pairs) {
             score = 5;
         } else if n_of_a_kind(&cards, 3) {
             score = 4;
-        } else if n_pair(&cards, 2) {
+        } else if num_pairs == 2 {
             score = 3;
-        } else if n_pair(&cards, 1) {
+        } else if num_pairs == 1 {
             score = 2;
         }
 
@@ -80,53 +80,36 @@ fn pair(cards: &[char]) -> bool {
     cards.iter().all(|&c| c == cards[0])
 }
 
-fn n_of_a_kind(cards: &[char], n: usize) -> bool {
-    let mut cards = cards.to_vec();
+fn get_pairs(cards: &[char]) -> HashMap<char, i32> {
+    cards.iter().fold(HashMap::new(), |mut acc, &c| {
+        *acc.entry(c).or_insert(0) += 1;
+        acc
+    })
+}
 
-    cards.sort();
+fn n_of_a_kind(cards: &[char], n: usize) -> bool {
     cards.windows(n).any(pair)
 }
 
-fn n_pair(cards: &[char], n: usize) -> bool {
-    let mut map = HashMap::new();
-
-    cards.iter().for_each(|&c| {
-        let count = map.entry(c).or_insert(0);
-        *count += 1;
-    });
-
-    map.values().filter(|&&v| v == 2).count() == n
+fn num_pairs(map: &HashMap<char, i32>, n: i32) -> usize {
+    map.values().filter(|&&v| v == n).count()
 }
 
-fn full_house(cards: &[char]) -> bool {
-    let mut map = HashMap::new();
-
-    cards.iter().for_each(|&c| {
-        let count = map.entry(c).or_insert(0);
-        *count += 1;
-    });
-
-    map.values().filter(|&&v| v == 2).count() == 1 && map.values().filter(|&&v| v == 3).count() == 1
+fn full_house(map: &HashMap<char, i32>) -> bool {
+    num_pairs(map, 2) == 1 && num_pairs(map, 3) == 1
 }
 
 fn same_label_cmp(cards_a: &str, cards_b: &str) -> Ordering {
-    let mut a_cmp = 0;
-    let mut b_cmp = 0;
-
     for (a, b) in cards_a.chars().zip(cards_b.chars()) {
         let a_val = CARDS.iter().position(|&c| c == a).unwrap();
         let b_val = CARDS.iter().position(|&c| c == b).unwrap();
 
-        if a_val > b_val {
-            a_cmp = 1;
-            break;
-        } else if a_val < b_val {
-            b_cmp = 1;
-            break;
+        if a_val != b_val {
+            return a_val.cmp(&b_val);
         }
     }
 
-    a_cmp.cmp(&b_cmp)
+    Ordering::Equal
 }
 
 pub fn part_2(_input: &str) -> usize {
