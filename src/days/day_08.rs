@@ -10,36 +10,27 @@ pub fn part_1(input: &str) -> usize {
     let mut target = "";
 
     while let Some(line) = iter.next() {
-        dbg!("init loop");
-        let split_kv = line.split(" = ").collect::<Vec<&str>>();
-        let key = split_kv[0];
-        if curr == "" {
-            curr = key;
+        let (k, v) = line.split_once(" = ").unwrap();
+        if curr.is_empty() {
+            curr = k;
         }
-        target = key;
-        let split_v: Vec<&str> = split_kv[1][1..split_kv[1].len() - 1].split(", ").collect();
-        map.insert(key, (&split_v[0], &split_v[1]));
+        target = k;
+        let (l, r) = v[1..v.len() - 1].split_once(", ").unwrap();
+        map.insert(k, (l, r));
     }
 
-    'found: loop {
-        dbg!("found loop");
+    loop {
         for instruction in instructions.iter() {
-            let (l, r) = map.get(curr).unwrap();
-            if instruction == &'L' {
-                curr = l;
-            } else {
-                curr = r;
-            }
+            let (l, r) = map.get(&curr).unwrap();
 
+            curr = if instruction == &'L' { l } else { r };
             count += 1;
 
             if curr == target {
-                break 'found;
+                return count;
             }
         }
     }
-
-    count
 }
 
 pub fn part_2(_input: &str) -> usize {
